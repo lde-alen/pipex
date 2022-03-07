@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 04:51:30 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/01/21 09:43:39 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/03/07 20:15:07 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,15 @@ void	pipex(int ac, char **av, char **env)
 {
 	t_pipex	pipex;
 
-	if (ac < 5)
-		ft_fputstr("ERROR: Invalid amount of arguments.\n");
+	if (ac != 5)
+	{
+		perror("Error");
+		exit(EXIT_FAILURE);
+	}
 	pipex.infile = open(av[1], O_RDONLY);
 	if (pipex.infile == -1)
 		ft_fputstr("ERROR: Invalid infile.\n");
-	pipex.outfile = open (av[ac - 1], O_TRUNC | O_CREAT | O_RDWR, 000644);
+	pipex.outfile = open(av[ac - 1], O_TRUNC | O_CREAT | O_RDWR, 000644);
 	if (pipex.outfile == -1)
 		ft_fputstr("ERROR: Invalid outfile.\n");
 	if (pipe(pipex.fd) == -1)
