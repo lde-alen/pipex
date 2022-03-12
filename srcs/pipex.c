@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 04:51:30 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/03/07 20:15:07 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/03/12 23:18:02 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,35 +56,50 @@ void	ft_closaz(t_pipex *pipex)
 
 void	pipex(int ac, char **av, char **env)
 {
-	t_pipex	pipex;
+	t_pipex	pip;
 
 	if (ac != 5)
+		ft_fputstr("Please input valid amount of parameters.\n");
+	else
 	{
-		perror("Error");
-		exit(EXIT_FAILURE);
+		if (pipe(pip.fd) == -1)
+			return ;
+		pip.av = av;
+		pip.path = ft_getpath(env);
+		pip.cmd_path = ft_split(pip.path, ':');
+		pip.child1 = fork();
+		if (pip.child1 < 0)
+			exit(1);
+		else if (pip.child1 == 0)
+		{
+			pip.infile = open(pip.av[1], O_RDONLY);
+			if (pip.infile == -1)
+			{
+				ft_error(pip, 1);
+				exit(1);
+			}
+			first_child(pip, env);
+		}
+		else
+		{
+			pip.child2 = fork();
+			if (pip.child2 < 0)
+				return ;
+			else if (pip.child2 == 0)
+			{
+				pip.outfile = open(pip.av[ac - 1], O_TRUNC | O_CREAT | O_RDWR, 000644);
+				if (pip.outfile == -1)
+				{
+					ft_error(pip, 4);
+					exit(1);
+				}
+				second_child(pip, env);
+			}
+		}
+		ft_closaz(&pip);
+		waitpid(pip.child1, NULL, 0);
+		waitpid(pip.child2, NULL, 0);
+		ft_free_dad(&pip);
+		exit(0);
 	}
-	pipex.infile = open(av[1], O_RDONLY);
-	if (pipex.infile == -1)
-		ft_fputstr("ERROR: Invalid infile.\n");
-	pipex.outfile = open(av[ac - 1], O_TRUNC | O_CREAT | O_RDWR, 000644);
-	if (pipex.outfile == -1)
-		ft_fputstr("ERROR: Invalid outfile.\n");
-	if (pipe(pipex.fd) == -1)
-		ft_fputstr("ERROR: Ivalid pipe(fd)");
-	pipex.path = ft_getpath(env);
-	pipex.cmd_path = ft_split(pipex.path, ':');
-	pipex.child1 = fork();
-	if (pipex.child1 < 0)
-		ft_fputstr("ERROR: Invalid fork of child1.\n");
-	else if (pipex.child1 == 0)
-		first_child(pipex, av, env);
-	pipex.child2 = fork();
-	if (pipex.child2 < 0)
-		ft_fputstr("ERROR: Invalid fork of child2.\n");
-	else if (pipex.child2 == 0)
-		second_child(pipex, av, env);
-	ft_closaz(&pipex);
-	waitpid(pipex.child1, NULL, 0);
-	waitpid(pipex.child2, NULL, 0);
-	ft_free_dad(&pipex);
 }

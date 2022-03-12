@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/18 09:27:48 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/03/12 23:14:07 by lde-alen         ###   ########.fr       */
+/*   Created: 2022/03/12 20:42:22 by lde-alen          #+#    #+#             */
+/*   Updated: 2022/03/12 23:12:59 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-int	main(int ac, char **av, char **env)
+void	ft_error(t_pipex pipex, int arg_nb)
 {
-	pipex(ac, av, env);
-	return (0);
+	ft_putstr_fd("bash: ", STDERR_FILENO);
+	ft_putstr_fd(pipex.av[arg_nb], STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putendl_fd(strerror(errno), STDERR_FILENO);
 }
+

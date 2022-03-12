@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 09:27:51 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/01/21 09:09:09 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/03/12 23:15:39 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <string.h>
 # include <stdio.h>
 # include "../libft/libft.h"
+# include <sys/errno.h>
 
 /* Structs */
 typedef struct s_pipex
@@ -33,6 +34,8 @@ typedef struct s_pipex
 	int		fd[2];
 	int		infile;
 	int		outfile;
+	char	**av;
+	char	**env;
 	char	*path;
 	char	**cmd_path;
 	char	**cmd_param;
@@ -44,9 +47,10 @@ typedef struct s_pipex
 void	pipex(int ac, char **av, char **env);
 void	ft_free_dad(t_pipex *pipex);
 void	ft_free_kiddo(t_pipex *pipex);
+void	ft_error(t_pipex pipex, int arg_nb);
 void	ft_closaz(t_pipex *pipex);
-void	first_child(t_pipex pipex, char **av, char **env);
-void	second_child(t_pipex pipex, char **av, char **env);
+void	first_child(t_pipex pipex, char **env);
+void	second_child(t_pipex pipex, char **env);
 char	*ft_getpath(char **env);
 
 #endif

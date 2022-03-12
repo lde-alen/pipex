@@ -6,15 +6,16 @@
 #    By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/18 09:27:53 by lde-alen          #+#    #+#              #
-#    Updated: 2022/01/21 09:15:46 by lde-alen         ###   ########.fr        #
+#    Updated: 2022/03/12 14:41:02 by lde-alen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=		pipex
 
-SRCS		=		./srcs/childs.c	\
-					./srcs/pipex.c	\
-					./srcs/main.c	\
+SRCS		=		./srcs/childs.c			\
+					./srcs/pipex.c			\
+					./srcs/main.c			\
+					./srcs/error_check.c	\
 
 OBJS		=		$(SRCS:.c=.o)
 

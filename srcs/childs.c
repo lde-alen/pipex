@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 04:57:21 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/02/25 14:32:01 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/03/12 23:15:00 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static char	*get_cmd(char **path, char *cmd)
 	{
 		tmp = ft_strjoin(*path, "/");
 		str = ft_strjoin(tmp, cmd);
+		free(tmp);
 		if (access (str, 0) == 0)
 			return (str);
 		free (str);
@@ -29,34 +30,26 @@ static char	*get_cmd(char **path, char *cmd)
 	return (NULL);
 }
 
-void	first_child(t_pipex pipex, char **av, char **env)
+void	first_child(t_pipex pipex, char **env)
 {
 	dup2(pipex.fd[1], 1);
 	close(pipex.fd[0]);
 	dup2(pipex.infile, 0);
-	pipex.cmd_param = ft_split(av[2], ' ');
+	pipex.cmd_param = ft_split(pipex.av[2], ' ');
 	pipex.cmd = get_cmd(pipex.cmd_path, pipex.cmd_param[0]);
 	if (!pipex.cmd)
-	{
-		ft_free_kiddo(&pipex);
-		ft_fputstr("ERROR: Invalid command.\n");
-		exit(1);
-	}
+		ft_error(pipex, 2);
 	execve(pipex.cmd, pipex.cmd_param, env);
 }
 
-void	second_child(t_pipex pipex, char **av, char **env)
+void	second_child(t_pipex pipex, char **env)
 {
 	dup2(pipex.fd[0], 0);
 	close(pipex.fd[1]);
 	dup2(pipex.outfile, 1);
-	pipex.cmd_param = ft_split(av[3], ' ');
+	pipex.cmd_param = ft_split(pipex. av[3], ' ');
 	pipex.cmd = get_cmd(pipex.cmd_path, pipex.cmd_param[0]);
 	if (!pipex.cmd)
-	{
-		ft_free_kiddo(&pipex);
-		ft_fputstr("");
-		exit(1);
-	}
+		ft_error(pipex, 3);
 	execve(pipex.cmd, pipex.cmd_param, env);
 }
