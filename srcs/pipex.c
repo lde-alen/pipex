@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 04:51:30 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/03/13 18:18:55 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/03/13 18:53:30 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ void	pipex(int ac, char **av, char **env)
 		if (pip.child1 < 0)
 			exit(1);
 		else if (pip.child1 == 0)
-			ft_malu(&pip, env);
+			ft_fork1(&pip, env);
 		else
-			ft_test(env, ac, &pip);
+			ft_fork2(env, ac, &pip);
 		ft_closaz(&pip);
 		waitpid(pip.child1, NULL, 0);
 		waitpid(pip.child2, NULL, 0);
