@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 04:51:30 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/03/12 23:18:02 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/03/13 18:18:55 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,31 +71,9 @@ void	pipex(int ac, char **av, char **env)
 		if (pip.child1 < 0)
 			exit(1);
 		else if (pip.child1 == 0)
-		{
-			pip.infile = open(pip.av[1], O_RDONLY);
-			if (pip.infile == -1)
-			{
-				ft_error(pip, 1);
-				exit(1);
-			}
-			first_child(pip, env);
-		}
+			ft_malu(&pip, env);
 		else
-		{
-			pip.child2 = fork();
-			if (pip.child2 < 0)
-				return ;
-			else if (pip.child2 == 0)
-			{
-				pip.outfile = open(pip.av[ac - 1], O_TRUNC | O_CREAT | O_RDWR, 000644);
-				if (pip.outfile == -1)
-				{
-					ft_error(pip, 4);
-					exit(1);
-				}
-				second_child(pip, env);
-			}
-		}
+			ft_test(env, ac, &pip);
 		ft_closaz(&pip);
 		waitpid(pip.child1, NULL, 0);
 		waitpid(pip.child2, NULL, 0);

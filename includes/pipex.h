@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 09:27:51 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/03/12 23:15:39 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/03/13 18:19:55 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef struct s_pipex
 /* Prototypes */
 
 void	pipex(int ac, char **av, char **env);
+void	ft_malu(t_pipex *pip, char **env);
+void	ft_test(char **env, int ac, t_pipex *pip);
 void	ft_free_dad(t_pipex *pipex);
 void	ft_free_kiddo(t_pipex *pipex);
 void	ft_error(t_pipex pipex, int arg_nb);
