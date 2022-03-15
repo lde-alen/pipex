@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 04:57:21 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/03/15 17:17:58 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/03/15 20:48:37 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,10 @@ static char	*get_cmd(char **path, char *cmd)
 void	first_child(t_pipex pipex, char **env)
 {
 	dup2(pipex.fd[1], 1);
+	close(pipex.fd[1]);
 	close(pipex.fd[0]);
 	dup2(pipex.infile, 0);
+	close(pipex.infile);
 	pipex.cmd_param = ft_split(pipex.av[2], ' ');
 	pipex.cmd = get_cmd(pipex.cmd_path, pipex.cmd_param[0]);
 	if (!pipex.cmd)
@@ -50,8 +52,10 @@ void	first_child(t_pipex pipex, char **env)
 void	second_child(t_pipex pipex, char **env)
 {
 	dup2(pipex.fd[0], 0);
+	close(pipex.fd[0]);
 	close(pipex.fd[1]);
 	dup2(pipex.outfile, 1);
+	close(pipex.outfile);
 	pipex.cmd_param = ft_split(pipex. av[3], ' ');
 	pipex.cmd = get_cmd(pipex.cmd_path, pipex.cmd_param[0]);
 	if (!pipex.cmd)

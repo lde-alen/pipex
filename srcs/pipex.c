@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 04:51:30 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/03/15 14:12:49 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/03/15 21:14:52 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	ft_free_dad(t_pipex *pipex)
 	int	i;
 
 	i = 0;
-	close(pipex->infile);
-	close(pipex->outfile);
 	while (pipex->cmd_path[i])
 	{
 		free(pipex->cmd_path[i]);
@@ -48,10 +46,10 @@ char	*ft_getpath(char **env)
 	return (*env + 5);
 }
 
-void	ft_closaz(t_pipex *pipex)
+void	ft_closaz(t_pipex *pip)
 {
-	close(pipex->fd[0]);
-	close(pipex->fd[1]);
+	close(pip->fd[0]);
+	close(pip->fd[1]);
 }
 
 void	pipex(int ac, char **av, char **env)
@@ -67,17 +65,14 @@ void	pipex(int ac, char **av, char **env)
 		pip.av = av;
 		pip.path = ft_getpath(env);
 		pip.cmd_path = ft_split(pip.path, ':');
-		pip.child1 = fork();
-		if (pip.child1 < 0)
-			exit(1);
-		else if (pip.child1 == 0)
-			ft_fork1(&pip, env);
-		else
+		ft_fork1(&pip, env);
+		if (pip.child1 != 0)
+		{
 			ft_fork2(env, ac, &pip);
-		ft_closaz(&pip);
-		waitpid(pip.child1, NULL, 0);
-		waitpid(pip.child2, NULL, 0);
-		ft_free_dad(&pip);
-		exit(0);
+			ft_closaz(&pip);
+			waitpid(pip.child1, NULL, 0);
+			waitpid(pip.child2, NULL, 0);
+			ft_free_dad(&pip);
+		}
 	}
 }

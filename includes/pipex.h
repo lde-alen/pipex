@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 09:27:51 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/03/15 14:21:32 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/03/15 18:34:31 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_fork2(char **env, int ac, t_pipex *pip);
 void	ft_free_dad(t_pipex *pipex);
 void	ft_free_kiddo(t_pipex *pipex);
 void	ft_error(t_pipex pipex, int arg_nb);
-void	ft_closaz(t_pipex *pipex);
+void	ft_closaz(t_pipex *pip);
 void	first_child(t_pipex pipex, char **env);
 void	second_child(t_pipex pipex, char **env);
 size_t	ft_strlen(const char *s);
