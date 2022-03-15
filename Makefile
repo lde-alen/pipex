@@ -6,7 +6,7 @@
 #    By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/18 09:27:53 by lde-alen          #+#    #+#              #
-#    Updated: 2022/03/15 22:14:23 by lde-alen         ###   ########.fr        #
+#    Updated: 2022/03/15 22:18:39 by lde-alen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ CFLAGS		=		-Wall -Wextra -Werror
 CC			=		gcc
 
 $(NAME)		:		$(OBJS)
-					$(CC) $(SRCS) -o $(NAME)
+					$(CC) $(OBJS) -o $(NAME)
 
 all			:		$(NAME)
 
