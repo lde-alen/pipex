@@ -6,11 +6,44 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 20:42:22 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/03/13 18:53:52 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/03/15 14:23:36 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+
+void	ft_fputchar(char c)
+{
+	write(2, &c, 1);
+}
+
+void	ft_fputstr(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		ft_fputchar(str[i]);
+		i++;
+	}
+	exit (EXIT_FAILURE);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	if (!s)
+		return ;
+	write(fd, s, ft_strlen(s));
+}
+
+void	ft_putendl_fd(char *s, int fd)
+{
+	if (fd < 0 || !s)
+		return ;
+	ft_putstr_fd(s, fd);
+	write(fd, "\n", 1);
+}
 
 void	ft_error(t_pipex pipex, int arg_nb)
 {
@@ -18,33 +51,4 @@ void	ft_error(t_pipex pipex, int arg_nb)
 	ft_putstr_fd(pipex.av[arg_nb], STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
 	ft_putendl_fd(strerror(errno), STDERR_FILENO);
-}
-
-void	ft_fork1(t_pipex *pip, char **env)
-{
-	pip->infile = open(pip->av[1], O_RDONLY);
-	if (pip->infile == -1)
-	{
-		ft_error(*pip, 1);
-		exit(1);
-	}
-	first_child(*pip, env);
-}
-
-void	ft_fork2(char **env, int ac, t_pipex *pip)
-{
-	pip->child2 = fork();
-	if (pip->child2 < 0)
-		return ;
-	else if (pip->child2 == 0)
-	{
-		pip->outfile = open(pip->av[ac - 1], \
-			 O_TRUNC | O_CREAT | O_RDWR, 000644);
-		if (pip->outfile == -1)
-		{
-			ft_error(*pip, 4);
-			exit(1);
-		}
-		second_child(*pip, env);
-	}
 }

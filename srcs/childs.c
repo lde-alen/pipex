@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 04:57:21 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/03/12 23:15:00 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/03/15 13:45:49 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,12 @@ void	first_child(t_pipex pipex, char **env)
 	pipex.cmd_param = ft_split(pipex.av[2], ' ');
 	pipex.cmd = get_cmd(pipex.cmd_path, pipex.cmd_param[0]);
 	if (!pipex.cmd)
-		ft_error(pipex, 2);
+	{
+		ft_putstr_fd("bash: ", STDERR_FILENO);
+		ft_putstr_fd(pipex.av[2], STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putendl_fd("command not found", STDERR_FILENO);
+	}
 	execve(pipex.cmd, pipex.cmd_param, env);
 }
 
@@ -50,6 +55,11 @@ void	second_child(t_pipex pipex, char **env)
 	pipex.cmd_param = ft_split(pipex. av[3], ' ');
 	pipex.cmd = get_cmd(pipex.cmd_path, pipex.cmd_param[0]);
 	if (!pipex.cmd)
-		ft_error(pipex, 3);
+	{
+		ft_putstr_fd("bash: ", STDERR_FILENO);
+		ft_putstr_fd(pipex.av[3], STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putendl_fd("command not found", STDERR_FILENO);
+	}
 	execve(pipex.cmd, pipex.cmd_param, env);
 }
