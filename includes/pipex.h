@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 09:27:51 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/03/15 18:34:31 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/03/15 22:13:43 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <string.h>
-# include <stdio.h>
 # include <sys/errno.h>
 
 /* Structs */

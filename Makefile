@@ -6,7 +6,7 @@
 #    By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/18 09:27:53 by lde-alen          #+#    #+#              #
-#    Updated: 2022/03/15 19:10:03 by lde-alen         ###   ########.fr        #
+#    Updated: 2022/03/15 22:14:23 by lde-alen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRCS		=		./srcs/childs.c			\
 
 OBJS		=		$(SRCS:.c=.o)
 
-CFLAGS		=		-Wall -Wextra -Werror -g3
+CFLAGS		=		-Wall -Wextra -Werror
 
 CC			=		gcc
 
